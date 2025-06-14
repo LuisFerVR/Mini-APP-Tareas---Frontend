@@ -33,9 +33,9 @@ export default function TaskForm() {
                 >
                     Descripción:
                 </label>
-                <input
+                <textarea
                     id="description"
-                    type="text"
+                    rows={5}
                     placeholder="Descripción de la tarea"
                     className="border w-full p-2"
                     name="description"

@@ -1,10 +1,39 @@
 "use client";
+import { addTaskAction } from "@/app/actions/add-task-action";
+import { redirect } from "next/navigation";
+import { useActionState, useEffect } from "react";
 import { FaSave } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 export default function AddTaskForm({children}: {children?: React.ReactNode}) {
+    const [state, dispatch] = useActionState(addTaskAction, {
+        errors: [],
+        success: ''
+    });
+
+    useEffect(() => {
+        if(state.success) {
+            Swal.fire({
+                title: '¡Éxito!',
+                text: state.success,
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+            });
+            redirect('/tasks');
+        }
+        if(state.errors.length > 0) {
+            Swal.fire({
+                title: '¡Error!',
+                text: state.errors.join(','),
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+            })
+        }
+    },[state])
+
   return (
     <form
-        action=''
+        action={dispatch}
     >
         {children}
         <div
