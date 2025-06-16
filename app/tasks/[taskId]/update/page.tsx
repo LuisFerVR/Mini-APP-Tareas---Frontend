@@ -6,6 +6,8 @@ import UpdateTaskForm from '@/app/components/tasks/UpdateTaskForm';
 import { TasksResponseSchema } from '@/app/src/schemas';
 import { notFound } from 'next/navigation';
 
+type Params = Promise<{taskId: string}>;
+
 async function getTaskById(id:number) {
   const url = `${process.env.API_URL}/tasks/${id}`;
   const req = await fetch(url,{
@@ -22,8 +24,8 @@ async function getTaskById(id:number) {
   return task;
 }
 
-export default async function UpdateTaskPage({ params }: { params: { taskId: string } }) {
-  const { taskId } = params;
+export default async function UpdateTaskPage({ params }: { params: Params }) {
+  const { taskId } = await params;
   const task = await getTaskById(+taskId);
   return (
     <>
