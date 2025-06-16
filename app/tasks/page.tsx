@@ -6,7 +6,12 @@ import { FaPlusSquare } from "react-icons/fa";
 
 async function getTasks() {
     const url = `${process.env.API_URL}/tasks`;
-    const req = await fetch(url);
+    const req = await fetch(url,{
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${process.env.API_TOKEN}`,
+        }
+    });
     const res = await req.json();
     if (!req.ok) {
         throw new Error('Error al obtener las tareas');
@@ -32,7 +37,7 @@ export default async function getTaskPage() {
                         tasks.length >= 1 ?
                         (
                             tasks.map(task => (
-                                <TaskComponent key={task.title} task={task} />
+                                <TaskComponent key={task.id} task={task} />
                             ))
                         ) :
                         (

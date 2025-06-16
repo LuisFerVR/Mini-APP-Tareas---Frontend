@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const TasksResponseSchema = z.object({
+    id:z.number().optional(),
     title: z.string(),
     description: z.string(),
 });

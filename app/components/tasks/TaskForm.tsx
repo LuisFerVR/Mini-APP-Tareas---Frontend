@@ -1,6 +1,7 @@
+import { Task } from '@/app/src/schemas'
 import React from 'react'
 
-export default function TaskForm() {
+export default function TaskForm({task}:{task?: Task}) {
   return (
     <>
         <div
@@ -21,6 +22,7 @@ export default function TaskForm() {
                     placeholder="Título de la tarea"
                     className="border w-full p-2"
                     name="title"
+                    defaultValue={task?.title || ''}
                 />
             </div>
 
@@ -39,6 +41,7 @@ export default function TaskForm() {
                     placeholder="Descripción de la tarea"
                     className="border w-full p-2"
                     name="description"
+                    defaultValue={task?.description || ''}
                 />
             </div>
         </div>

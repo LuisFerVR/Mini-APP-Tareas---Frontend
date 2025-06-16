@@ -1,12 +1,11 @@
 "use server";
-import { revalidatePath } from "next/cache";
-import { ErrorResponseSchema, TasksResponseSchema } from "../src/schemas";
+import { ErrorResponseSchema, Task, TasksResponseSchema } from "../src/schemas";
 
 type ActionStateType = {
     errors: string[];
     success: string;
 }
-export async function addTaskAction(prevState: ActionStateType,formData: FormData) {
+export async function updateTaskAction(taskId: Task['id'],prevState: ActionStateType,formData: FormData) {
     const task = TasksResponseSchema.safeParse({
         title: formData.get('title'),
         description: formData.get('description')
@@ -19,17 +18,18 @@ export async function addTaskAction(prevState: ActionStateType,formData: FormDat
         }
     }
 
-    const url = `${process.env.API_URL}/tasks`;
+    const url = `${process.env.API_URL}/tasks/${taskId}`;
+
     const req = await fetch(url, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             authorization: `Bearer ${process.env.API_TOKEN}`
         },
         body: JSON.stringify(task.data)
     });
-    const res = await req.json();
 
+    const res = await req.json();
     if (!req.ok) {
         const errors = ErrorResponseSchema.parse(res);
         return {
@@ -38,10 +38,8 @@ export async function addTaskAction(prevState: ActionStateType,formData: FormDat
         }
     }
 
-    revalidatePath('/tasks');
-
     return {
         errors: [],
-        success: 'Tarea agregada correctamente'
+        success: 'Tarea actualizada correctamente'
     }
 }
