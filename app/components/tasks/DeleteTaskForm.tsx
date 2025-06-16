@@ -22,11 +22,11 @@ export default function DeleteTaskForm({id}: {id: Task['id']}) {
             action={(handleDeleteTask)}
         >
             <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-40 h-10 items-center flex gap-3 cursor-pointer"
                 type="submit"
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 sm:py-2 sm:px-4 rounded w-20 sm:w-40 h-10 flex items-center justify-center gap-2 text-xs sm:text-base"
             >
-                <FaTrash />
-                Eliminar
+                <FaTrash className="text-sm sm:text-base" />
+                <span className="hidden sm:inline">Eliminar</span>
             </button>
         </form>
     )

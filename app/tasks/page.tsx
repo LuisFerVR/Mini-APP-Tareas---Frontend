@@ -22,15 +22,14 @@ async function getTasks() {
 
 export default async function getTaskPage() {
     const tasks = await getTasks();
-    console.log('tasks:', tasks);
 
     return (
         <>
             <div
-                className="flex flex-col gap-2 p-4 bg-blue-900 rounded-lg shadow-md width-full items-center"
+                className="flex flex-col gap-2 p-4 bg-blue-900 rounded-lg shadow-md width-full items-center max-w-full md:w-150 mx-auto"
             >
                 <div
-                    className="flex flex-col gap-2"
+                    className="flex flex-col gap-2 max-w-full md:w-150 mx-auto"
                 >
                     <Heading>Tareas</Heading>
                     {
